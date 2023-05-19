@@ -1,45 +1,67 @@
-// Mensaje de entrada
-alert("Bienvenido al analisis de costos de los productos para el restaurant")
+// Obtener referencias a los elementos HTML
+const presupuestoInput = document.getElementById("presupuesto");
+const harinaParaPizzaInput = document.getElementById("harinaParaPizza");
+const quesoParaPizzaInput = document.getElementById("quesoParaPizza");
+const panHamburguesaInput = document.getElementById("panHamburguesa");
+const carneHamburguesaInput = document.getElementById("carneHamburguesa");
+const resultadoElement = document.getElementById("resultado");
 
-// Pedir al usuario el presupuesto total
-const presupuesto = parseInt(prompt("Ingrese su presupuesto total"));
+// Verificar si hay datos almacenados en Local Storage y cargarlos
+const Datos = localStorage.getItem("costos");
+let costos = {
+  harinaPizza: 0,
+  quesoPizza: 0,
+  panHamburguesa: 0,
+  carneHamburguesa: 0
+};
 
-// Crear un array de ingredientes y sus costos
-const ingredientes = [
-  { nombre: "harina para pizza", costo: 0 },
-  { nombre: "queso para pizza", costo: 0 },
-  { nombre: "pan de hamburguesa", costo: 0 },
-  { nombre: "carne para hamburguesa", costo: 0 }
-];
-
-// Pedir al usuario el costo de cada ingrediente
-ingredientes.forEach(function(ingrediente) {
-  ingrediente.costo = parseInt(prompt(`Ingrese el costo de ${ingrediente.nombre}`));
-});
-
-// Calcular el costo total de la pizza
-const costoTotalPizza = ingredientes[0].costo + ingredientes[1].costo;
-
-// Calcular el costo total de la hamburguesa
-const costoTotalHamburguesa = ingredientes[2].costo + ingredientes[3].costo;
-
-// Calcular el costo total de ambos productos
-const costoTotalProductos = costoTotalPizza + costoTotalHamburguesa;
-
-// Mostrar el costo total de cada producto en consola
-console.log(`El costo total de la pizza es: ${costoTotalPizza}`);
-console.log(`El costo total de la hamburguesa es: ${costoTotalHamburguesa}`);
-
-// Verificar si el costo total de ambos productos está dentro del presupuesto
-if (costoTotalProductos <= presupuesto) {
-    const sobrante = presupuesto - costoTotalProductos;
-  console.log(`El costo total de ambos productos es ${costoTotalProductos} y está dentro del presupuesto. Le sobran ${sobrante}.`);
-  alert(`El costo total de ambos productos es ${costoTotalProductos} y está dentro del presupuesto. Le sobran ${sobrante}.`);
-} else {
-    const excedente = costoTotalProductos - presupuesto;
-  console.log(`El costo total de ambos productos es ${costoTotalProductos} y excede el presupuesto por ${excedente}.`);
-  alert(`El costo total de ambos productos es ${costoTotalProductos} y excede el presupuesto por ${excedente}.`);
+if (Datos) {
+  costos = JSON.parse(Datos);
+  harinaParaPizzaInput.value = costos.harinaPizza;
+  quesoParaPizzaInput.value = costos.quesoPizza;
+  panHamburguesaInput.value = costos.panHamburguesa;
+  carneHamburguesaInput.value = costos.carneHamburguesa;
 }
 
+// Función para calcular y mostrar el resultado
+function calcularCostoTotal() {
+  // Obtener los valores de entrada
+  const presupuesto = parseInt(presupuestoInput.value);
+  const costoHarinaPizza = parseInt(harinaParaPizzaInput.value);
+  const costoQuesoPizza = parseInt(quesoParaPizzaInput.value);
+  const costoPanHamburguesa = parseInt(panHamburguesaInput.value);
+  const costoCarneHamburguesa = parseInt(carneHamburguesaInput.value);
 
+  // Actualizar los costos en el objeto costos
+  costos.harinaPizza = costoHarinaPizza;
+  costos.quesoPizza = costoQuesoPizza;
+  costos.panHamburguesa = costoPanHamburguesa;
+  costos.carneHamburguesa = costoCarneHamburguesa;
 
+  // Guardar los costos en Local Storage como JSON
+  localStorage.setItem("costos", JSON.stringify(costos));
+
+  // Calcular el costo total de la pizza y la hamburguesa
+  const costoTotalPizza = costoHarinaPizza + costoQuesoPizza;
+  const costoTotalHamburguesa = costoPanHamburguesa + costoCarneHamburguesa;
+  const costoTotalProductos = costoTotalPizza + costoTotalHamburguesa;
+
+  // Mostrar el resultado en el HTML
+  if (costoTotalProductos <= presupuesto) {
+    const sobrante = presupuesto - costoTotalProductos;
+    resultadoElement.textContent = `El costo total de ambos productos es ${costoTotalProductos} y está dentro del presupuesto. Le sobran ${sobrante}.`;
+    console.log(`El costo total de la pizza es: ${costoTotalPizza}`);
+    console.log(`El costo total de la hamburguesa es: ${costoTotalHamburguesa}`);
+    console.log(`El costo total de ambos productos es ${costoTotalProductos} y está dentro del presupuesto. Le sobran ${sobrante}.`);
+  } else {
+    const excedente = costoTotalProductos - presupuesto;
+    resultadoElement.textContent = `El costo total de ambos productos es ${costoTotalProductos} y excede el presupuesto por ${excedente}.`;
+    onsole.log(`El costo total de la pizza es: ${costoTotalPizza}`);
+    console.log(`El costo total de la hamburguesa es: ${costoTotalHamburguesa}`);
+    console.log(`El costo total de ambos productos es ${costoTotalProductos} y excede el presupuesto por ${excedente}.`);
+  }
+}
+
+// Agregar evento de clic al botón "Calcular"
+const btnCalcular = document.getElementById("btn-calcular");
+btnCalcular.addEventListener("click", calcularCostoTotal);
