@@ -9,31 +9,28 @@
 <body>
     <h1>Análisis de Costos de Productos para el Restaurante</h1>
   
-    <label for="presupuesto">Presupuesto Total:</label>
-    <input type="number" id="presupuesto" name="presupuesto">
-    <br>
+    <h1>Calculadora de Costos</h1>
+
+    <label for="presupuesto">Presupuesto:</label>
+    <input type="number" id="presupuesto" />
   
-    <h2>Ingredientes para la pizza</h2>
-    <label for="harinaParaPizza">Costo de la harina para pizza:</label>
-    <input type="number" id="harinaParaPizza" name="harinaParaPizza">
-    <br>
-    
-    <label for="quesoParaPizza">Costo del queso para pizza:</label>
-    <input type="number" id="quesoParaPizza" name="quesoParaPizza">
-    <br>
+    <h2>Pizza</h2>
+    <label for="harinaParaPizza">Costo Harina:</label>
+    <input type="number" id="harinaParaPizza" />
   
-    <h2>Ingredientes para la hamburguesa</h2>
-    <label for="panHamburguesa">Costo del pan de hamburguesa:</label>
-    <input type="number" id="panHamburguesa" name="panHamburguesa">
-    <br>
-    
-    <label for="carneHamburguesa">Costo de la carne para hamburguesa:</label>
-    <input type="number" id="carneHamburguesa" name="carneHamburguesa">
-    <br>
-    
-    <button id="btn-calcular">Calcular</button>
+    <label for="quesoParaPizza">Costo Queso:</label>
+    <input type="number" id="quesoParaPizza" />
   
-    <h2>Resultado:</h2>
+    <h2>Hamburguesa</h2>
+    <label for="panHamburguesa">Costo Pan:</label>
+    <input type="number" id="panHamburguesa" />
+  
+    <label for="carneHamburguesa">Costo Carne:</label>
+    <input type="number" id="carneHamburguesa" />
+  
+    <button id="btn-calcular">Calcular</button>    
+    <button id="btn-nuevo-calculo">Nuevo Cálculo</button>
+    <button id="btn-limpiar">Limpiar</button>
     <div id="resultado"></div>
     <script src="app.js"></script>
 </body>
